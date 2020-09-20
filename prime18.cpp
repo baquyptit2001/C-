@@ -1,20 +1,28 @@
 #include<iostream>
-#include<math.h>
 
 using namespace std;
+
+int gcd(int a, int b){
+    if(b==0)
+        return a;
+    return gcd(b, a%b);
+}
 
 int main(){
     int t;
     cin>>t;
-    for(int i=0;i<t;i++){
-        int m, n, a, b, dem=0;
+    while(t--){
+        int a, b, m, n;
         cin>>m>>n>>a>>b;
-        for(int j=(m+(a-(m%a)));j<=n;j+=a)
-            if(j%b!=0)
-                dem++;
-        for(int j=(m+(b-(m%b)));j<=n;j+=b)
-            dem++;
-        cout<<dem<<endl;
+        int lcm=a*b/gcd(a,b);
+        int res=n/a+n/b-m/a-m/b-n/lcm+m/lcm;
+        if(m%a==0)
+            res++;
+        if(m%b==0)
+            res++;
+        if(m%b==0&&m%a==0)
+            res--;
+        cout<<res<<endl;
     }
     return 0;
 }
